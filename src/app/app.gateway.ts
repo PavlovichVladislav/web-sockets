@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { AppService } from 'src/app.service';
 import { Server, Socket } from 'socket.io';
-import { Prisma } from '@prisma/client';
+import { Prisma } from 'generated/prisma';
 
 @WebSocketGateway()
 export class AppGateway
@@ -24,6 +24,7 @@ export class AppGateway
     payload: Prisma.ChatCreateInput,
   ): Promise<void> {
     await this.appService.createMessage(payload);
+    /** Событие recMessage и объект ChatCreateInput отправляются всем подключенным к сокету. */
     this.server.emit('recMessage', payload);
   }
 

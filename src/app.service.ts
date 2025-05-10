@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Prisma } from '@prisma/client';
-import { Chat } from 'generated/prisma';
+import { Chat, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class AppService {
@@ -11,7 +10,7 @@ export class AppService {
     return await this.prisma.chat.create({ data });
   }
 
-  async getMessages(): Promise<Chat> {
-    return await this.prisma.chat.findMany({ data });
+  async getMessages(): Promise<Chat[]> {
+    return await this.prisma.chat.findMany();
   }
 }
